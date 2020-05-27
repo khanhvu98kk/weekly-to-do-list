@@ -102,11 +102,11 @@ export default {
         // console.log("onSelect: ", newSelectedIndex, this.selectedWeekDay);
       }
     },
-    onUpdateName(newListName) {
-        // this.selectedList.name = newListName;
+    onUpdateName(newList) {
+        this.selectedList = newList;
         // this.selectedList = { ...this.selectedList, name: newListName };
-        this.selectedList = Object.assign({}, this.selectedList, { name: newListName });
-        console.log("onUpdateName(): ", this.weekDates[this.selectedIndex].list);
+        // this.selectedList = Object.assign({}, this.selectedList, { name: newListName });
+        console.log("onUpdateName(): ", newList, this.weekDates[this.selectedIndex].list);
         // = this.weekDates[newSelectedIndex].list;
     },
     isLeapYear(year) {

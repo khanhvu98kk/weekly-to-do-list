@@ -4,7 +4,7 @@
     <!-- list name  -->
     <div class="row flex-container">
       <div v-if="!isEditingName" class="col-12" @click="editName()">
-        <h3>{{ this.listName }}</h3>
+        <h3>{{ this.list.name }}</h3>
       </div>
       <form v-else class="name-form"  @submit.prevent="submitName()">
         <input type="text" class="form-control name-input" v-model="newName" />
@@ -15,7 +15,7 @@
     <div class="row flex-container">
       <div class="col-lg-6">
         <Draggable
-          v-model="items"
+          v-model="this.list.items"
           :disabled="!enabled"
           class="list-group"
           ghost-class="ghost"
@@ -40,7 +40,7 @@
     <div class="row flex-container">
       <div class="col-lg-6">
         <Draggable
-          v-model="items"
+          v-model="this.list.items"
           :disabled="!enabled"
           class="list-group"
           ghost-class="ghost"
@@ -91,30 +91,30 @@ export default {
     return {
       enabled: true,
       dragging: false,
-      items: this.list.items, // [{ desc: "First to-do item!", done: false }],
+      // items: this.list.items, // [{ desc: "First to-do item!", done: false }],
       isEditingName: false,
-      listName: this.list.name, //this.getDefaultName(this.weekdate), // "Name Your " + this.weekdate + " To-do List!"
+      // listName: this.list.name, //this.getDefaultName(this.weekdate), // "Name Your " + this.weekdate + " To-do List!"
     };
   },
   computed: {
     todoItems: function() {
-      return this.items.filter(item => !item.done);
+      return this.list.items.filter(item => !item.done);
     },
     completedItems: function() {
-      return this.items.filter(item => item.done);
+      return this.list.items.filter(item => item.done);
     }
   },
-  watch: {
-    weekdate(newVal) {
-      this.listName = this.getDefaultName(newVal);
-    }
-  },
+  // watch: {
+  //   weekdate(newVal) {
+  //     this.listName = this.getDefaultName(newVal);
+  //   }
+  // },
   methods: {
-    getDefaultName(weekday) {
-      return "Name Your " + weekday + " To-do List!";
-    },
+    // getDefaultName(weekday) {
+    //   return "Name Your " + weekday + " To-do List!";
+    // },
     onDelete(deleted) {
-      this.items = this.items.filter(item => item !== deleted);
+      this.list.items = this.list.items.filter(item => item !== deleted);
     },
     onEdit(item, newItemDesc) {
       item.desc = newItemDesc;
@@ -123,17 +123,18 @@ export default {
       item.done = newComplete;
     },
     onAdd(newDesc) {
-      this.items.push({ desc: newDesc, done: false });
+      this.list.items.push({ desc: newDesc, done: false });
     },
     submitName() {
       this.isEditingName = false;
       // this.listName = this.newName;
-      console.log("submitName(): ", this.listName, this.newName);
-      this.$emit('on-update-name', this.newName);
+      this.list.name = this.newName;
+      console.log("submitName(): ", this.list.name, this.newName);
+      this.$emit('on-update-name', this.list);
     },
     editName() {
       this.isEditingName = true;
-      this.newName = this.listName;
+      this.newName = this.list.name;
     },
     checkMove: function(e) {
       console.log("Future index: " + e.draggedContext.futureIndex);
