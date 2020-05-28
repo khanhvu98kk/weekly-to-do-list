@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="month-year-header">
+      <h2>{{ this.selectedMonth }}, {{ this.selectedYear }}</h2>
+    </div>
     <div class="row week-block">
       <!-- <form @submit.prevent="checkDate()">
         <input type="text" class="form-control" @blur="checkDate()" v-model="dateString" />
@@ -28,6 +31,12 @@ import ToDoList from "@/components/ToDoList.vue";
 const DAYS_IN_WEEK = 7;
 const SHORT_MONTHS = [4,6,9,11];
 const LONG_MONTHS = [1,3,5,7,8,10,12];
+const MONTH_NAMES = [
+    "January", "February", "March",
+    "April", "May", "June",
+    "July", "August", "September",
+    "October", "November", "December"
+];
 
 export default {
   name: "Week",
@@ -37,13 +46,17 @@ export default {
   },
   data() {
     return {
+      selectedMonth: "",
+      selectedYear: 0,
       selectedIndex: 0,
       weekDates: [],
-      selectedList: {},
     }
   },
   created: function() {
-    this.weekDates = this.weekDatesComp();
+    var date = new Date();
+    this.weekDates = this.weekDatesComp(date);
+    this.selectedMonth = MONTH_NAMES[date.getMonth()]; // convert from num to string
+    this.selectedYear = date.getFullYear();
   },
   computed: {
   },
@@ -55,8 +68,8 @@ export default {
     //   var y = parseInt(nums[2], 10);
     //   var nextDate = this.getNextDate(d, m, y);
     // },
-    weekDatesComp() {
-      const date = new Date();
+    weekDatesComp(date) {
+      // const date = new Date();
       if (this.selectedIndex == undefined)
         this.selectedIndex = 0;
 
@@ -64,7 +77,7 @@ export default {
       for (var i = 0; i < DAYS_IN_WEEK; i++) {
         var nextDate;
         if (i == 0) {
-          nextDate = { weekday: date.getDay(), date: date.getDate(), month: date.getMonth(), year: date.getFullYear(), selected: this.selectedIndex == 0 };
+          nextDate = { weekday: date.getDay(), date: date.getDate(), month: date.getMonth(), year: date.getFullYear(), selected: this.selectedIndex == 0 }; // { weekday: date.getDay(), date: date.getDate(), month: date.getMonth(), year: date.getFullYear(), selected: this.selectedIndex == 0 };
         } else {
           var currDate = dates[i-1];
           nextDate = this.getNextDate(currDate.weekday, currDate.date, currDate.month, currDate.year);
@@ -80,6 +93,9 @@ export default {
         this.weekDates[this.selectedIndex].selected = false;
         this.selectedIndex = newSelectedIndex;
         this.weekDates[this.selectedIndex].selected = true;
+
+        this.selectedMonth = MONTH_NAMES[this.weekDates[this.selectedIndex].month];
+        this.selectedYear = this.weekDates[this.selectedIndex].year;
       }
     },
     isLeapYear(year) {
@@ -132,7 +148,15 @@ export default {
 </script>
 
 <style scoped>
+.month-year-header {
+  /* background-image: linear-gradient(to right, #e0caca, #d4b8ca, #c7a3b5); */
+  padding: 20px 0 15px 0;
+  margin: 0 20px;
+  background-color: #1867c0;
+  border-radius: 30px 30px 0 0;
+  color: white;
+}
 .week-block {
-  margin: 20px;
+  margin: 0 20px;
 }
 </style>

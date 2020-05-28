@@ -1,15 +1,8 @@
-# Simple Weekly To-do List
+# Weekly To-do List
+A simple weekly to-do list as a fun Vue starter project! 
 
 ## References
-[To-Do List] (https://github.com/BrandonBurrus/vue-todos)
-[Draggable] (https://github.com/SortableJS/Vue.Draggable)
-[Icons] (https://fontawesome.com/)
-
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [Calendar](https://vuetifyjs.com/en/components/calendars/).
+- [To-Do List](https://github.com/BrandonBurrus/vue-todos).
+- [Draggable](https://github.com/SortableJS/Vue.Draggable).
+- [Icons](https://fontawesome.com/).

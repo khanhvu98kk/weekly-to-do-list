@@ -41,14 +41,9 @@ export default {
   flex: 1 1 auto;
 }
 .boundingBox {
-  border-right: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
-  border-top: 1px solid #e0e0e0;
+  border: 1px solid #e0e0e0;
   color: #000;
   flex: 1 1 auto;
-}
-.boundingBox:first-child {
-  border-left: 1px solid #e0e0e0;
 }
 .weekDay {
   padding: 15px 5px 5px 5px;
@@ -65,6 +60,10 @@ export default {
   background-color: transparent!important;
   border-color: transparent!important;
 }
+.btn-date:hover+div {
+  background-color: #808080;
+  border-radius: 50%;
+}
 .btn-date-selected {
   background-color: #1867c0 !important;
   border-radius: 50%;
@@ -72,6 +71,5 @@ export default {
 }
 .caret {
   color: #1867c0;
-  /* width: 50px !important;  */
 }
 </style>
