@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="selected">
 
     <!-- list name  -->
     <div class="row flex-container">
@@ -85,7 +85,8 @@ export default {
   },
   props: {
     list: Object,
-    weekdate: String,
+    selected: Boolean,
+    // weekdate: String,
   },
   data() {
     return {

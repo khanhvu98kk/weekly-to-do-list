@@ -13,9 +13,10 @@
       ></Day>
     </div>
     <ToDoList
-      :list="this.selectedList"
-      :weekdate="this.selectedWeekDay"
-      @on-update-name="onUpdateName($event)"
+      v-for="(date, index) in weekDates"
+      :key="index"
+      :list="date.list"
+      :selected="date.selected"
     />
   </div>
 </template>

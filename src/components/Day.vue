@@ -1,13 +1,16 @@
 <template>
-  <div class="boundingBox">
-    <div class="weekDay">{{ this.weekDay }}</div>
-    <div class="calendarDate">
-      <button
-        type="button"
-        :class="[ 'btn-date', { 'btn-date-selected': this.thisDate.selected }]"
-        @click="select()"
-      >{{ this.thisDate.date }}</button>
+  <div class="date-and-arrow">
+    <div class="boundingBox">
+      <div class="weekDay">{{ this.weekDay }}</div>
+      <div class="calendarDate">
+        <button
+          type="button"
+          :class="[ 'btn-date', { 'btn-date-selected': this.thisDate.selected }]"
+          @click="select()"
+        >{{ this.thisDate.date }}</button>
+      </div>
     </div>
+    <i class="fas fa-caret-down fa-2x caret" v-show="this.thisDate.selected"></i>
   </div>
 </template>
 
@@ -34,6 +37,9 @@ export default {
 </script>
 
 <style>
+.date-and-arrow {
+  flex: 1 1 auto;
+}
 .boundingBox {
   border-right: 1px solid #e0e0e0;
   border-bottom: 1px solid #e0e0e0;
@@ -62,6 +68,10 @@ export default {
 .btn-date-selected {
   background-color: #1867c0 !important;
   border-radius: 50%;
-  font-color: white;
+  color: white;
+}
+.caret {
+  color: #1867c0;
+  /* width: 50px !important;  */
 }
 </style>
