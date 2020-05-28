@@ -1,19 +1,10 @@
-# todolist
+# Simple Weekly To-do List
 
-## Project setup
-```
-npm install
-```
+## References
+[To-Do List] (https://github.com/BrandonBurrus/vue-todos)
+[Draggable] (https://github.com/SortableJS/Vue.Draggable)
+[Icons] (https://fontawesome.com/)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
 
 ### Lints and fixes files
 ```

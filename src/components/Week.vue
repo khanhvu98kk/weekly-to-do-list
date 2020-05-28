@@ -15,7 +15,7 @@
     <ToDoList
       v-for="(date, index) in weekDates"
       :key="index"
-      :list="date.list"
+      :weekday="date.weekday"
       :selected="date.selected"
     />
   </div>
@@ -28,7 +28,6 @@ import ToDoList from "@/components/ToDoList.vue";
 const DAYS_IN_WEEK = 7;
 const SHORT_MONTHS = [4,6,9,11];
 const LONG_MONTHS = [1,3,5,7,8,10,12];
-const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
 
 export default {
   name: "Week",
@@ -41,13 +40,10 @@ export default {
       selectedIndex: 0,
       weekDates: [],
       selectedList: {},
-      selectedWeekDay: '',
     }
   },
   created: function() {
     this.weekDates = this.weekDatesComp();
-    this.selectedList = this.selectedListComp();
-    this.selectedWeekDay = this.selectedWeekDayComp();
   },
   computed: {
   },
@@ -59,12 +55,6 @@ export default {
     //   var y = parseInt(nums[2], 10);
     //   var nextDate = this.getNextDate(d, m, y);
     // },
-    selectedWeekDayComp() {
-      return WEEK_DAYS[this.weekDates[this.selectedIndex].weekday];
-    },
-    selectedListComp() {
-        return this.weekDates[this.selectedIndex].list;
-    },
     weekDatesComp() {
       const date = new Date();
       if (this.selectedIndex == undefined)
@@ -72,43 +62,25 @@ export default {
 
       var dates = [];
       for (var i = 0; i < DAYS_IN_WEEK; i++) {
-        var nextDate, item;
+        var nextDate;
         if (i == 0) {
-          nextDate = { weekday: date.getDay(), date: date.getDate(), month: date.getMonth(), year: date.getFullYear(), selected: this.selectedIndex == 0};
+          nextDate = { weekday: date.getDay(), date: date.getDate(), month: date.getMonth(), year: date.getFullYear(), selected: this.selectedIndex == 0 };
         } else {
           var currDate = dates[i-1];
           nextDate = this.getNextDate(currDate.weekday, currDate.date, currDate.month, currDate.year);
           nextDate.selected = (i == this.selectedIndex);
         }
-        item = { desc: "", done: false };
-        var weekday = WEEK_DAYS[nextDate.weekday]
-        item.desc = "Task for " + weekday;
-
-        nextDate.list = { name: "Name Your " + weekday + " To-do List!", items: [item] };
-
         dates.push(nextDate);
       }
-      console.log("created: ", dates);
+      // console.log("created: ", dates);
       return dates;
     },
     onSelect(newSelectedIndex) {
-      if (this.selectedIndex != newSelectedIndex) {
+      if (this.selectedIndex != newSelectedIndex) { // new index not the same as old
         this.weekDates[this.selectedIndex].selected = false;
         this.selectedIndex = newSelectedIndex;
         this.weekDates[this.selectedIndex].selected = true;
-        // this.$emit("on-select-day", this.selectedIndex);
-
-        this.selectedList = this.weekDates[newSelectedIndex].list;
-        this.selectedWeekDay = WEEK_DAYS[this.weekDates[newSelectedIndex].weekday];
-        // console.log("onSelect: ", newSelectedIndex, this.selectedWeekDay);
       }
-    },
-    onUpdateName(newList) {
-        this.selectedList = newList;
-        // this.selectedList = { ...this.selectedList, name: newListName };
-        // this.selectedList = Object.assign({}, this.selectedList, { name: newListName });
-        console.log("onUpdateName(): ", newList, this.weekDates[this.selectedIndex].list);
-        // = this.weekDates[newSelectedIndex].list;
     },
     isLeapYear(year) {
       if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0))
@@ -153,7 +125,7 @@ export default {
       } else {
         nextDate = d+1;
       }
-      return { weekday: nextWeekday, date: nextDate, month: nextMonth, year: nextYear };
+      return { weekday: nextWeekday, date: nextDate, month: nextMonth, year: nextYear, selected: false };
     }
   }
 }

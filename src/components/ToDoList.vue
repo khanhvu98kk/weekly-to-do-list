@@ -4,7 +4,7 @@
     <!-- list name  -->
     <div class="row flex-container">
       <div v-if="!isEditingName" class="col-12" @click="editName()">
-        <h3>{{ this.list.name }}</h3>
+        <h3>{{ this.name }}</h3>
       </div>
       <form v-else class="name-form"  @submit.prevent="submitName()">
         <input type="text" class="form-control name-input" v-model="newName" />
@@ -15,11 +15,10 @@
     <div class="row flex-container">
       <div class="col-lg-6">
         <Draggable
-          v-model="this.list.items"
+          v-model="todoItems"
           :disabled="!enabled"
           class="list-group"
           ghost-class="ghost"
-          :move="checkMove"
           @start="dragging = true"
           @end="dragging = false"
         >
@@ -40,11 +39,10 @@
     <div class="row flex-container">
       <div class="col-lg-6">
         <Draggable
-          v-model="this.list.items"
+          v-model="completedItems"
           :disabled="!enabled"
           class="list-group"
           ghost-class="ghost"
-          :move="checkMove"
           @start="dragging = true"
           @end="dragging = false"
         >
@@ -76,6 +74,8 @@ import ToDoItem from "@/components/ToDoItem.vue";
 import NewToDo from "@/components/NewToDo.vue";
 import Draggable from "vuedraggable";
 
+const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+
 export default {
   name: "ToDoList",
   components: {
@@ -84,26 +84,26 @@ export default {
     Draggable
   },
   props: {
-    list: Object,
+    weekday: Number,
     selected: Boolean,
-    // weekdate: String,
+  },
+  created() {
+    var item = { desc: "", done: false };
+    var weekday = WEEK_DAYS[this.weekday]
+    item.desc = "Task for " + weekday;
+
+    this.name = "Name Your " + weekday + " To-do List!";
+    this.todoItems = [item];
   },
   data() {
     return {
       enabled: true,
-      dragging: false,
-      // items: this.list.items, // [{ desc: "First to-do item!", done: false }],
       isEditingName: false,
-      // listName: this.list.name, //this.getDefaultName(this.weekdate), // "Name Your " + this.weekdate + " To-do List!"
+      dragging: false,
+      todoItems: [],
+      completedItems: [],
+      name: ""
     };
-  },
-  computed: {
-    todoItems: function() {
-      return this.list.items.filter(item => !item.done);
-    },
-    completedItems: function() {
-      return this.list.items.filter(item => item.done);
-    }
   },
   // watch: {
   //   weekdate(newVal) {
@@ -111,35 +111,32 @@ export default {
   //   }
   // },
   methods: {
-    // getDefaultName(weekday) {
-    //   return "Name Your " + weekday + " To-do List!";
-    // },
-    onDelete(deleted) {
-      this.list.items = this.list.items.filter(item => item !== deleted);
+    onDelete(deletedItem) {
+      if (!deletedItem.done) { // todoItems
+        this.todoItems = this.todoItems.filter(item => item !== deletedItem);
+      } else {  // completedItems
+        this.completedItems = this.completedItems.filter(item => item !== deletedItem);
+      }
     },
     onEdit(item, newItemDesc) {
       item.desc = newItemDesc;
     },
-    onComplete(item, newComplete) {
-      item.done = newComplete;
+    onComplete(completedItem, newComplete) {
+      completedItem.done = newComplete;
+      this.todoItems = this.todoItems.filter(item => item !== completedItem); // rm item from todoItems
+      this.completedItems.push(completedItem);
     },
     onAdd(newDesc) {
-      this.list.items.push({ desc: newDesc, done: false });
+      this.todoItems.push({ desc: newDesc, done: false });
     },
     submitName() {
       this.isEditingName = false;
-      // this.listName = this.newName;
-      this.list.name = this.newName;
-      console.log("submitName(): ", this.list.name, this.newName);
-      this.$emit('on-update-name', this.list);
+      this.name = this.newName;
     },
     editName() {
       this.isEditingName = true;
-      this.newName = this.list.name;
+      this.newName = this.name;
     },
-    checkMove: function(e) {
-      console.log("Future index: " + e.draggedContext.futureIndex);
-    }
   }
 };
 </script>
