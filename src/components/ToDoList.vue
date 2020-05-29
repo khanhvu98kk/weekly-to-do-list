@@ -13,7 +13,7 @@
 
     <!-- list of to-do items  -->
     <div class="row flex-container">
-      <div class="col-lg-7">
+      <div class="col-lg-6">
         <Draggable
           v-model="todoItems"
           :disabled="!enabled"
@@ -37,7 +37,7 @@
 
     <!-- list of completed items  -->
     <div class="row flex-container">
-      <div class="col-lg-7">
+      <div class="col-lg-6">
         <Draggable
           v-model="completedItems"
           :disabled="!enabled"
@@ -61,7 +61,7 @@
 
     <!-- form to add new item  -->
     <div class="row flex-container">
-      <div class="col-lg-7">
+      <div class="col-lg-6">
         <NewToDo @on-add="onAdd($event)" />
       </div>
     </div>

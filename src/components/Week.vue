@@ -1,19 +1,18 @@
 <template>
   <div>
-    <div class="month-year-header">
-      <h2>{{ this.selectedMonth }}, {{ this.selectedYear }}</h2>
-    </div>
-    <div class="row week-block">
-      <!-- <form @submit.prevent="checkDate()">
-        <input type="text" class="form-control" @blur="checkDate()" v-model="dateString" />
-      </form> -->
-      <Day
-        v-for="(date, index) in weekDates"
-        :key="index"
-        :this-date="date"
-        :order-index="index"
-        @on-select="onSelect($event)"
-      ></Day>
+    <div class="all-week-header">
+      <div class="month-year-header">
+        <h2>{{ this.selectedMonth }}, {{ this.selectedYear }}</h2>
+      </div>
+      <div class="row week-block">
+        <Day
+          v-for="(date, index) in weekDates"
+          :key="index"
+          :this-date="date"
+          :order-index="index"
+          @on-select="onSelect($event)"
+        ></Day>
+      </div>
     </div>
     <ToDoList
       v-for="(date, index) in weekDates"
@@ -61,13 +60,6 @@ export default {
   computed: {
   },
   methods: {
-    // checkDate() {
-    //   var nums = this.dateString.split('/');
-    //   var m = parseInt(nums[0], 10);
-    //   var d = parseInt(nums[1], 10);
-    //   var y = parseInt(nums[2], 10);
-    //   var nextDate = this.getNextDate(d, m, y);
-    // },
     weekDatesComp(date) {
       // const date = new Date();
       if (this.selectedIndex == undefined)
@@ -148,6 +140,9 @@ export default {
 </script>
 
 <style scoped>
+.all-week-header {
+  padding: 0 200px; 
+}
 .month-year-header {
   /* background-image: linear-gradient(to right, #e0caca, #d4b8ca, #c7a3b5); */
   padding: 20px 0 15px 0;
