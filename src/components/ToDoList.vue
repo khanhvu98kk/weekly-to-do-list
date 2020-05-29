@@ -74,7 +74,7 @@ import ToDoItem from "@/components/ToDoItem.vue";
 import NewToDo from "@/components/NewToDo.vue";
 import Draggable from "vuedraggable";
 
-const WEEK_DAYS_LONG = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thurday', 'Friday', 'Satday'];
+const WEEK_DAYS_LONG = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thurday', 'Friday', 'Saturday'];
 
 export default {
   name: "ToDoList",

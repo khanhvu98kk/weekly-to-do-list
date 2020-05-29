@@ -8,7 +8,10 @@ const routes = [
   {
     path: "/",
     name: "TodoApp",
-    component: TodoApp
+    component: TodoApp,
+    meta: {
+      title: 'About Page - Example App',
+    },
   }
 ];
 
