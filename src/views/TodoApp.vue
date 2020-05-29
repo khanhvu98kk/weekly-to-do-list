@@ -6,7 +6,7 @@
 import Week from '@/components/Week.vue';
 
 export default {
-  name: 'Timeline',
+  name: 'TodoApp',
   components: {
     Week
   },

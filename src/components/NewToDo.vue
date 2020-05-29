@@ -101,11 +101,11 @@ export default {
   z-index: 1;
   font-family: 'Lato', Arial, Helvetica, sans-serif;
   border: 1px solid #ccc;
-  /* width: 15rem; */
+  width: auto;
   height: 20rem;
   overflow: scroll;
   padding: 1rem;
-  margin-top: 1rem; 
+  margin-top: 1rem;
   box-sizing: border-box;
   border-radius: 0.5rem;
   background: #fff;

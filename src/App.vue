@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/calendarapp">Calendar</router-link> |
-      <router-link to="/timeline">Timeline</router-link>
+      <router-link to="/">Weekly To-do List</router-link>
     </div>
     <router-view />
   </div>
@@ -11,7 +9,7 @@
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Lato', Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

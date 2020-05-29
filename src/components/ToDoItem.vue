@@ -1,7 +1,9 @@
 <template>
   <li
     class="d-flex align-items-center list-group-item"
-    :class="{ completed: isCompleted }"
+    @mouseover="isHovered = true"
+    @mouseleave="isHovered = false"
+    :class="{ completed: isCompleted, hovered: isHovered }"
   >
     <!-- mark-as-complete button  -->
     <button
@@ -29,9 +31,17 @@
       />
     </form>
 
+    <!-- star button  -->
+    <button
+      class="btn btn-outline-warning border-0"
+      @click="star()"
+    >
+      <span v-if="!isStarred" class="far fa-star"></span>
+      <span v-else class="fas fa-star"></span>
+    </button>
     <!-- edit button  -->
     <button
-      class="btn btn-outline-primary border-0 ml-2 mr-2"
+      class="btn btn-outline-primary border-0"
       @click="edit()"
     >
       <span class="far fa-edit"></span>
@@ -52,7 +62,9 @@ export default {
   data() {
     return {
       isEditing: false,
-      newDescription: ""
+      newDescription: "",
+      isStarred: false,
+      isHovered: false,
     };
   },
   props: {
@@ -68,9 +80,12 @@ export default {
       // this.description = this.newDescription;
       this.$emit("on-edit", this.newDescription);
     },
+    star() {
+      this.isStarred = !this.isStarred;
+    },
     edit() {
       this.newDescription = this.description;
-      this.isEditing = true;
+      this.isEditing = !this.isEditing;
     },
     complete() {
       // this.isCompleted = !this.isCompleted;
@@ -84,7 +99,15 @@ export default {
 .completed {
   background-color: #dbffeb;
 }
+.hovered {
+  background-color: #f5f5f5;
+}
 .checkbox {
   width: 40px;
+}
+.btn-right {
+  padding: 0.375rem 0.5rem;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 </style>

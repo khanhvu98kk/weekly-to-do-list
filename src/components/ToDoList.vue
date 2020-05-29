@@ -4,7 +4,7 @@
     <!-- list name  -->
     <div class="row flex-container">
       <div v-if="!isEditingName" class="col-12" @click="editName()">
-        <h3>{{ this.name }}</h3>
+        <h4>{{ this.name }}</h4>
       </div>
       <form v-else class="name-form"  @submit.prevent="submitName()">
         <input type="text" class="form-control name-input" v-model="newName" />
@@ -13,7 +13,7 @@
 
     <!-- list of to-do items  -->
     <div class="row flex-container">
-      <div class="col-lg-6">
+      <div class="col-lg-7">
         <Draggable
           v-model="todoItems"
           :disabled="!enabled"
@@ -37,7 +37,7 @@
 
     <!-- list of completed items  -->
     <div class="row flex-container">
-      <div class="col-lg-6">
+      <div class="col-lg-7">
         <Draggable
           v-model="completedItems"
           :disabled="!enabled"
@@ -61,7 +61,7 @@
 
     <!-- form to add new item  -->
     <div class="row flex-container">
-      <div class="col-lg-6">
+      <div class="col-lg-7">
         <NewToDo @on-add="onAdd($event)" />
       </div>
     </div>
@@ -74,7 +74,7 @@ import ToDoItem from "@/components/ToDoItem.vue";
 import NewToDo from "@/components/NewToDo.vue";
 import Draggable from "vuedraggable";
 
-const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+const WEEK_DAYS_LONG = ['Sunday', 'Monday', 'Tueday', 'Wednesday', 'Thurday', 'Friday', 'Satday'];
 
 export default {
   name: "ToDoList",
@@ -89,7 +89,7 @@ export default {
   },
   created() {
     var item = { desc: "", done: false };
-    var weekday = WEEK_DAYS[this.weekday]
+    var weekday = WEEK_DAYS_LONG[this.weekday]
     item.desc = "Task for " + weekday;
 
     this.name = "Name Your " + weekday + " To-do List!";

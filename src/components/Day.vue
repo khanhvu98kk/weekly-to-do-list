@@ -1,21 +1,23 @@
 <template>
   <div class="date-and-arrow">
-    <div class="boundingBox">
+    <div class="boundingBox" :style="{ 'border-radius': (orderIndex == 0) ? '0 0 0 30px' : ( (orderIndex == 6) ? '0 0 30px 0' : '') }" >
       <div class="weekDay">{{ this.weekDay }}</div>
       <div class="calendarDate">
         <button
           type="button"
-          :class="[ 'btn-date', { 'btn-date-selected': this.thisDate.selected }]"
+          @mouseover="hover = true"
+          @mouseleave="hover = false"
+          :class="[ {'btn-date': !this.hover }, { 'btn-date-selected': this.thisDate.selected }, { 'btn-date-hover': this.hover }]"
           @click="select()"
         >{{ this.thisDate.date }}</button>
       </div>
     </div>
-    <i class="fas fa-caret-down fa-2x caret" v-show="this.thisDate.selected"></i>
+    <i class="fas fa-caret-down fa-3x caret" v-show="this.thisDate.selected"></i>
   </div>
 </template>
 
 <script>
-const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
+const WEEK_DAYS_SHORT = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 export default {
   name: "Day",
@@ -23,9 +25,17 @@ export default {
     thisDate: Object,
     orderIndex: Number,
   },
+  data() {
+    return {
+      hover: false,
+      // styleObject: {
+      //   border-radius: '0 0 0 10px',
+      // },
+    };
+  },
   computed: {
     weekDay() {
-      return WEEK_DAYS[this.thisDate.weekday];
+      return WEEK_DAYS_SHORT[this.thisDate.weekday];
     }
   },
   methods: {
@@ -54,8 +64,11 @@ export default {
   padding: 5px 0 15px 0;
   min-height: 70px;
 }
-.calendarDate div:hover {
-  background-color: #808080;
+.btn-date-hover {
+  height: 56px;
+  width: 56px;
+  border-color: transparent!important;
+  background-color: #f5f5f5;
   border-radius: 50%;
 }
 .btn-date {
