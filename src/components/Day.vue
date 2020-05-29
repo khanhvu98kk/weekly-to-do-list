@@ -54,15 +54,15 @@ export default {
   padding: 5px 0 15px 0;
   min-height: 70px;
 }
+.calendarDate div:hover {
+  background-color: #808080;
+  border-radius: 50%;
+}
 .btn-date {
   height: 56px;
   width: 56px;
   background-color: transparent!important;
   border-color: transparent!important;
-}
-.btn-date:hover+div {
-  background-color: #808080;
-  border-radius: 50%;
 }
 .btn-date-selected {
   background-color: #1867c0 !important;

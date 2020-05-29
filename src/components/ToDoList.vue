@@ -121,10 +121,15 @@ export default {
     onEdit(item, newItemDesc) {
       item.desc = newItemDesc;
     },
-    onComplete(completedItem, newComplete) {
-      completedItem.done = newComplete;
-      this.todoItems = this.todoItems.filter(item => item !== completedItem); // rm item from todoItems
-      this.completedItems.push(completedItem);
+    onComplete(chosenItem, newComplete) {
+      chosenItem.done = newComplete;
+      if (newComplete) {  // move to completedItems
+        this.todoItems = this.todoItems.filter(item => item !== chosenItem); // rm item from todoItems
+        this.completedItems.push(chosenItem);
+      } else { // move back to todoItems
+        this.completedItems = this.completedItems.filter(item => item !== chosenItem); // rm item from todoItems
+        this.todoItems.push(chosenItem);
+      }
     },
     onAdd(newDesc) {
       this.todoItems.push({ desc: newDesc, done: false });
